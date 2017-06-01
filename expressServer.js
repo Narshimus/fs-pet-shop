@@ -19,9 +19,7 @@ app.get('/pets/:index',(req, res) =>{
   let petsData = fs.readFileSync(petsPath,'utf8');
   let pets = JSON.parse(petsData);
   let index = Number.parseInt(req.params.index);
-  console.log('yo');
   if (pets[index]) {
-    console.log('momma');
     res.set('Content-Type', 'application/json');
     res.send(pets[index]);
   }
@@ -30,8 +28,8 @@ app.get('/pets/:index',(req, res) =>{
   }
 })
 
-app.use((req, res) => {
-  res.sendStatus(404);
+app.use((req, res, next) => {
+  res.status(404).send('Sorry about that!');
 });
 
 app.listen(port, () => {
