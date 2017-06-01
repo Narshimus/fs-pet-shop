@@ -6,6 +6,7 @@ let petData = JSON.parse(fs.readFileSync(FILE_PATH, 'utf8'));
 routes = {
   '/pets': function(req, res) {
     let request = (req.url).split('/');
+    console.log(req.url.match());
     if (request.length === 2) {
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(petData));
