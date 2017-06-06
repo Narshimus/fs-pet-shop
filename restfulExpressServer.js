@@ -48,6 +48,7 @@ app.get('/pets/:index', (req, res) => {
 })
 
 //patch
+//TODO add validation
 
 app.patch('/pets/:index', (req, res) => {
   //assign index and petList
@@ -61,8 +62,9 @@ app.patch('/pets/:index', (req, res) => {
   if (!pet) {
     return res.sendStatus(400);
   }
-  //for loop to iterate through keys in req.body and update petList
+  //for loop to iterate through keys in req.body
   Object.keys(pet).forEach((i)=>{
+    //update pet with given keys
     petList[index][i] = pet[i];
   })
   fs.writeFileSync(petsPath,JSON.stringify(petList));
