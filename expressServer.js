@@ -9,22 +9,26 @@ const port = process.env.PORT || 8000;
 
 app.disable('x-powered-by');
 
-app.get('/pets',(req,res) => {
-  let petsData = fs.readFileSync(petsPath,'utf8');
+function petStuff(req, res){
+  let petsData = fs.readFileSync(petsPath, 'utf8');
   res.set('Content-Type', 'application/json');
   res.send(petsData);
-});
+}
 
-app.get('/pets/:index',(req, res) =>{
-  let petsData = fs.readFileSync(petsPath,'utf8');
+app.get('/pets', petStuff);
+
+app.get('/pets/', petStuff);
+
+
+app.get('/pets/:index', (req, res, next) => {
+  let petsData = fs.readFileSync(petsPath, 'utf8');
   let pets = JSON.parse(petsData);
   let index = Number.parseInt(req.params.index);
   if (pets[index]) {
     res.set('Content-Type', 'application/json');
     res.send(pets[index]);
-  }
-  else {
-    res.sendStatus(404)
+  } else {
+    next();
   }
 })
 
